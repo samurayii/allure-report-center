@@ -1,6 +1,7 @@
 import { ILogger, Logger } from "logger-flx";
 import { Middleware, IMiddleware, Context, Next } from "koa-ts-decorators";
 import { Catalog } from "di-ts-decorators";
+import * as chalk from "chalk";
 
 @Middleware("api-server")
 export class Errors implements IMiddleware {
@@ -10,7 +11,7 @@ export class Errors implements IMiddleware {
         private readonly _name: string,
         private readonly _logger: ILogger = <ILogger>Catalog(Logger)
     ) {
-        this._logger.info(`[${this._app_id}] Middleware "${this._name}" assigned to application`, "dev");
+        this._logger.info(`[${this._app_id}] Middleware ${chalk.gray(this._name)} assigned to application`, "dev");
     }
 
     use (): unknown {

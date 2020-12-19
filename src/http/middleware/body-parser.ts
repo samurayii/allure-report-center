@@ -3,6 +3,7 @@ import { Middleware, IMiddleware } from "koa-ts-decorators";
 import { IApiServerConfig } from "..";
 import { ILogger, Logger } from "logger-flx";
 import { Catalog } from "di-ts-decorators";
+import * as chalk from "chalk";
 
 @Middleware("api-server")
 export class BodyParser implements IMiddleware {
@@ -12,7 +13,7 @@ export class BodyParser implements IMiddleware {
         private readonly _name: string,
         private readonly _logger: ILogger = <ILogger>Catalog(Logger)
     ) {
-        this._logger.info(`[${this._app_id}] Middleware "${this._name}" assigned to application`, "dev");
+        this._logger.info(`[${this._app_id}] Middleware ${chalk.gray(this._name)} assigned to application`, "dev");
     }
 
     use (config: IApiServerConfig): unknown {

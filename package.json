@@ -1,9 +1,9 @@
 {
-    "name": "template",
+    "name": "allure-report-center",
     "version": "0.0.1",
-    "description": "Template for nodejs app with typescript",
+    "description": "Central server for allure reports",
     "main": "app.js",
-    "docker_image": "samuray/app-template",
+    "docker_image": "samuray/allure-report-center",
     "scripts": {
         "up": "ncu && ncu -u && rimraf ./package-lock.json && npm i",
         "ncu": "ncu",
@@ -26,7 +26,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/samurayii/template-project-ts.git"
+        "url": "git+https://github.com/samurayii/allure-report-center.git"
     },
     "keywords": [
         "templates",
@@ -35,9 +35,9 @@
     "author": "Nuzhnov A.A.",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/samurayii/template-project-ts/issues"
+        "url": "https://github.com/samurayii/allure-report-center/issues"
     },
-    "homepage": "https://github.com/samurayii/template-project-ts.git#readme",
+    "homepage": "https://github.com/samurayii/allure-report-center.git#readme",
     "devDependencies": {
         "@types/chai": "^4.2.14",
         "@types/chai-http": "^4.2.0",

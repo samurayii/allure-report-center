@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-ENV APP_NAME "app-template"
+ENV APP_NAME "allure-report-center"
 
 RUN apt-get update && \
     apt-get install -y curl bash && \
