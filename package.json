@@ -1,6 +1,6 @@
 {
     "name": "allure-report-center",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Central server for allure reports",
     "main": "app.js",
     "directories": {

@@ -30,7 +30,7 @@ const bootstrap = async () => {
         reports.run();
 
         await api_server.listen( () => {
-            logger.info(`[api-server] listening on network interface ${chalk.gray(`${web_server.config.listening}${web_server.prefix}`)}`);
+            logger.info(`[api-server] listening on network interface ${chalk.gray(`${api_server.config.listening}${api_server.prefix}`)}`);
         });
         
         await web_server.listen( () => {
