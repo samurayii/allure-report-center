@@ -1,3 +1,3 @@
-# Template app.
+# Allure report center
 
-template. [Документация](docs/README.md)
+Центральный центр отчётов allure. [Документация](docs/README.md)
