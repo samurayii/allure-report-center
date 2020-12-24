@@ -56,13 +56,13 @@ export class Healthcheck implements IMiddleware {
 
         return (ctx: Context, next: Next) => {
 
-            if (ctx.url === "/_ping") {
+            if (ctx.url === "/_ping" || ctx.url === `${config.prefix}/_ping`) {
                 ctx.body = "pong 🎾";
                 ctx.status = 200;
                 return;
             }
 
-            if (ctx.url === "/healthcheck/status") {
+            if (ctx.url === "/healthcheck/status" || ctx.url === `${config.prefix}/healthcheck/status`) {
                 ctx.body = {
                     healthy: true,
                     work_time: Math.floor((Date.now() - this._start_time)/1000),

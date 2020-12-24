@@ -1,29 +1,40 @@
+#!/usr/bin/env node
 import config from "./lib/entry";
+import * as chalk from "chalk";
 import { Logger } from "logger-flx";
 import { Singleton } from "di-ts-decorators";
 import { KoaD } from "koa-ts-decorators";
 import { Authorization } from "./lib/authorization";
 
-console.log(JSON.stringify(config, null, 4));
-
 import "./http";
+import { Reports } from "./lib/reports";
 
 const logger = new Logger(config.logger);
 const authorization = new Authorization(config.authorization);
+const reports = new Reports(config.reports, logger);
 
 Singleton("config", config);
 Singleton(Logger.name, logger);
+Singleton(Reports.name, reports);
 
 const api_server = new KoaD(config.api, "api-server");
+const web_server = new KoaD(config.web, "web-server");
 
 const bootstrap = async () => {
 
     try {
 
         api_server.context.authorization = authorization;
+        web_server.context.authorization = authorization;
+
+        reports.run();
 
         await api_server.listen( () => {
-            logger.info(`[api-server] listening on network interface ${api_server.config.listening}${api_server.prefix}`);
+            logger.info(`[api-server] listening on network interface ${chalk.gray(`${web_server.config.listening}${web_server.prefix}`)}`);
+        });
+        
+        await web_server.listen( () => {
+            logger.info(`[web-server] listening on network interface ${chalk.gray(`${web_server.config.listening}${web_server.prefix}`)}`);
         });
 
     } catch (error) {

@@ -135,7 +135,7 @@
                     "properties": {
                         "enable": {
                             "type": "boolean",
-                            "default": false,
+                            "default": true,
                             "env": "ALLURE_REPORT_CENTER_API_PARSING_ENABLE",
                             "enum": [true, false]
                         },
@@ -164,7 +164,7 @@
                         },
                         "text_limit": {
                             "type": "string",
-                            "default": "1mb",
+                            "default": "10mb",
                             "env": "ALLURE_REPORT_CENTER_API_PARSING_TEXT_LIMIT",
                             "minLength": 1,
                             "maxLength": 16,
@@ -178,7 +178,7 @@
                         },
                         "json": {
                             "type": "boolean",
-                            "default": true,
+                            "default": false,
                             "env": "ALLURE_REPORT_CENTER_API_PARSING_JSON",
                             "enum": [true, false]
                         },
@@ -245,11 +245,211 @@
                 "env",
                 "parsing"
             ]
+        },
+        "web": {
+            "type": "object",
+            "default": {},
+            "env": "ALLURE_REPORT_CENTER_WEB",
+            "properties": {
+                "enable": {
+                    "type": "boolean",
+                    "default": true,
+                    "env": "ALLURE_REPORT_CENTER_WEB_ENABLE",
+                    "enum": [true, false]
+                },
+                "auth": {
+                    "type": "boolean",
+                    "default": false,
+                    "env": "ALLURE_REPORT_CENTER_WEB_AUTH",
+                    "enum": [true, false]
+                },
+                "listening": {
+                    "type": "string",
+                    "default": "*:3000",
+                    "minLength": 0,
+                    "maxLength": 64,
+                    "env": "ALLURE_REPORT_CENTER_WEB_LISTENING",
+                    "pattern": "^([a-zA-Z]{1}[-a-zA-Z0-9.]{0,255}|[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|\\*)\\:[0-9]{1,5}$"
+                },
+                "prefix": {
+                    "type": "string",
+                    "default": "",
+                    "minLength": 0,
+                    "maxLength": 32,
+                    "env": "ALLURE_REPORT_CENTER_WEB_PREFIX",
+                    "pattern": "^(\/[a-zA-Z]{1}|)[a-zA-Z0-9]{0,31}$"
+                },
+                "proxy": {
+                    "type": "boolean",
+                    "default": false,
+                    "env": "ALLURE_REPORT_CENTER_WEB_PROXY",
+                    "enum": [true, false]
+                },
+                "subdomain_offset": {
+                    "type": "integer",
+                    "default": 2,
+                    "env": "ALLURE_REPORT_CENTER_WEB_SUBDOMAIN_OFFSET",
+                    "minimum": 0
+                },
+                "proxy_header": {
+                    "type": "string",
+                    "default": "X-Forwarded-For",
+                    "env": "ALLURE_REPORT_CENTER_WEB_PROXY_HEADER",
+                    "minLength": 0,
+                    "maxLength": 32
+                },
+                "ips_count": {
+                    "type": "integer",
+                    "default": 0,
+                    "env": "ALLURE_REPORT_CENTER_WEB_IPS_COUNT",
+                    "minimum": 0
+                },
+                "env": {
+                    "type": "string",
+                    "default": "development",
+                    "env": "ALLURE_REPORT_CENTER_WEB_ENV",
+                    "minLength": 0,
+                    "maxLength": 32
+                },
+                "keys": {
+                    "type": "array",
+                    "env": "ALLURE_REPORT_CENTER_WEB_KEYS",
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "minItems": 1
+                },
+                "static": {
+                    "type": "object",
+                    "default": {},
+                    "env": "ALLURE_REPORT_CENTER_WEB_STATIC",
+                    "properties": {
+                        "folder": {
+                            "type": "string",
+                            "default": "static",
+                            "env": "ALLURE_REPORT_CENTER_WEB_STATIC_FOLDER",
+                            "minLength": 1,
+                            "maxLength": 256
+                        },
+                        "maxage": {
+                            "type": "integer",
+                            "default": 0,
+                            "env": "ALLURE_REPORT_CENTER_WEB_STATIC_MAXAGE",
+                            "minimum": 0
+                        },
+                        "hidden": {
+                            "type": "boolean",
+                            "default": false,
+                            "env": "ALLURE_REPORT_CENTER_WEB_STATIC_HIDDEN",
+                            "enum": [true, false]
+                        },
+                        "index": {
+                            "type": "string",
+                            "default": "index.html",
+                            "env": "ALLURE_REPORT_CENTER_WEB_STATIC_INDEX",
+                            "minLength": 1,
+                            "maxLength": 64
+                        },
+                        "defer": {
+                            "type": "boolean",
+                            "default": false,
+                            "env": "ALLURE_REPORT_CENTER_WEB_STATIC_DEFER",
+                            "enum": [true, false]
+                        },
+                        "gzip": {
+                            "type": "boolean",
+                            "default": false,
+                            "env": "ALLURE_REPORT_CENTER_WEB_STATIC_GZIP",
+                            "enum": [true, false]
+                        },
+                        "brotli": {
+                            "type": "boolean",
+                            "default": false,
+                            "env": "ALLURE_REPORT_CENTER_WEB_STATIC_BROTLI",
+                            "enum": [true, false]
+                        }
+                    },
+                    "required": [
+                        "folder",
+                        "maxage",
+                        "hidden",
+                        "index",
+                        "defer",
+                        "gzip",
+                        "brotli"
+                    ]
+                }
+            },
+            "required": [
+                "enable",
+                "auth",
+                "listening",
+                "prefix",
+                "proxy",
+                "subdomain_offset",
+                "proxy_header",
+                "ips_count",
+                "env",
+                "static"
+            ]
+        },
+        "reports": {
+            "type": "object",
+            "default": {},
+            "env": "ALLURE_REPORT_CENTER_REPORTS",
+            "properties": {
+                "store_folder": {
+                    "type": "string",
+                    "default": "store",
+                    "env": "ALLURE_REPORT_CENTER_REPORTS_STORE_FOLDER",
+                    "minLength": 1,
+                    "maxLength": 256
+                },
+                "http_folder": {
+                    "type": "string",
+                    "default": "static/projects",
+                    "env": "ALLURE_REPORT_CENTER_REPORTS_HTTP_FOLDER",
+                    "minLength": 1,
+                    "maxLength": 256
+                },
+                "cron": {
+                    "type": "object",
+                    "default": {},
+                    "env": "ALLURE_REPORT_CENTER_REPORTS_CRON",
+                    "properties": {
+                        "time_zone": {
+                            "type": "string",
+                            "default": "Europe/Moscow",
+                            "env": "ALLURE_REPORT_CENTER_REPORTS_CRON_TIME_ZONE",
+                            "minLength": 1,
+                            "maxLength": 32
+                        },
+                        "interval": {
+                            "type": "string",
+                            "default": "*/5 * * * * *",
+                            "env": "ALLURE_REPORT_CENTER_REPORTS_CRON_INTERVAL",
+                            "pattern": "^.* .* .* .* .* .*$"
+                        }
+                    },
+                    "required": [
+                        "time_zone",
+                        "interval"
+                    ]
+                }
+            },
+            "required": [
+                "store_folder",
+                "http_folder",
+                "cron"
+            ]
         }
     },
     "required": [
         "logger",
         "authorization",
-        "api"
+        "api",
+        "web",
+        "reports"
     ]
 }

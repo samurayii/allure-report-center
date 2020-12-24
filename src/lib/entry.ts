@@ -9,12 +9,13 @@ import json_from_schema from "json-from-default-schema";
 import * as auth_user_schema from "./schemes/auth_user.json";
 import * as config_schema from "./schemes/config.json";
 import { IAppConfig } from "./config.interface";
+import { execSync } from "child_process";
  
 const pkg = finder(__dirname).next().value;
 
 program.version(`version: ${pkg.version}`, "-v, --version", "output the current version.");
 program.name(pkg.name);
-program.option("-c, --config <type>", "Path to config file.");
+program.option("-c, --config <type>", "Path to config file. (Environment variable: ALLURE_REPORT_CENTER_CONFIG_PATH=<type>)");
 
 program.parse(process.argv);
 
@@ -53,6 +54,13 @@ const validate = ajv.compile(config_schema);
 
 if (!validate(config)) {
     console.error(chalk.red(`[ERROR] Schema errors:\n${JSON.stringify(validate.errors, null, 2)}`));
+    process.exit(1);
+}
+
+try { 
+    execSync("allure --version");
+} catch (error) {
+    console.error(`${chalk.red("[ERROR]")} Can not exec command ${chalk.cyan("allure --version")}, error: ${error}`);
     process.exit(1);
 }
 

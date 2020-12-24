@@ -10,3 +10,7 @@ ob
 docker-build/app
 docker-build/package.json
 !docker-build/config.toml
+store
+static
+!src/static
+run.txt

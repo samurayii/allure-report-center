@@ -1,12 +1,22 @@
 FROM ubuntu:18.04
 
+ARG ALLURE_RELEASE=2.8.0
+ARG ALLURE_REPO=https://dl.bintray.com/qameta/maven/io/qameta/allure/allure-commandline
+
 ENV APP_NAME "allure-report-center"
 
 RUN apt-get update && \
-    apt-get install -y curl bash && \
+    apt-get install -y curl bash unzip openjdk-8-jre && \
     curl -sL https://deb.nodesource.com/setup_12.x | bash && \
     apt-get install -y nodejs && \
     node -v && \
+    curl ${ALLURE_REPO}/${ALLURE_RELEASE}/allure-commandline-${ALLURE_RELEASE}.zip -L -o /tmp/allure-commandline.zip && \
+    unzip -q /tmp/allure-commandline.zip -d / && \
+    apt-get remove -y unzip && \
+    chmod -R +x /allure-${ALLURE_RELEASE}/bin && \
+    ln -s /allure-${ALLURE_RELEASE}/bin/allure /usr/bin/allure && \
+    allure --version && \
+    rm -rf /tmp/* && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*  && \
     rm -f /var/cache/apt/archives/*.deb  && \

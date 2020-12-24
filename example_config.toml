@@ -27,11 +27,38 @@
         encoding = "utf-8"              # кодировка парсинга
         form_limit = "56kb"             # лимит для форм
         json_limit = "1mb"              # лимит для json
-        text_limit = "1mb"              # лимит для raw
+        text_limit = "10mb"             # лимит для raw
         text = true                     # парсинг raw
-        json = true                     # парсинг json
+        json = false                    # парсинг json
         multipart = false               # парсинг составных частей
         include_unparsed = false        # добавить исходное тело запроса в переменную ctx.request.body
         urlencoded = true               # парсинг данных urlencoded
         json_strict = true              # строгий режим парсинга json
         methods = ["POST"]              # список методов для парсинга
+
+[web]                                   # настройка WEB сервера
+    enable = false                      # активация WEB сервера
+    auth = false                        # активация авторизации
+    listening = "*:3000"                # настройка слушателя
+    prefix = ""                         # префикс
+    proxy = false                       # когда поле заголовка true proxy будут доверенным
+    subdomain_offset = 2                # смещение от поддомена для игнорирования
+    proxy_header = "X-Forwarded-For"    # заголовок IP прокси
+    ips_count = 0                       # максимальное количество IP прочитанное из заголовка прокси, по умолчанию 0 (означает бесконечность)
+    env = "development"                 # среда для сервера koa
+    #keys = []                          # массив подписанных ключей cookie
+    [web.static]                        # настройка статического сервера (пакет: https://github.com/koajs/static)
+        folder = "static"               # папка со статическими файлами
+        maxage = 0                      # время жизни кеша в миллисекундах
+        hidden = false                  # разрешение отдавать скрытые файлы
+        index = "index.html"            # название файла индекса
+        defer = false                   # позволить активировать нижестоящие промежуточное по первым
+        gzip = true                     # gzip сжатие
+        brotli = true                   # автоматическое обслуживание файла brotli
+
+[reports]                               # настрока генерации отчётов
+    store_folder = "store"              # папка размещения хранилища
+    http_folder = "static/projects"     # папка размещения http отчётов
+    [reports.cron]                      # настрока cron для генерацая отчётов
+        time_zone = "Europe/Moscow"     # временная зона для cron
+        interval = "*/5 * * * * *"      # интервал cron       

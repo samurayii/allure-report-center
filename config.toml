@@ -9,5 +9,13 @@
 
 [api]
     enable = true
-    auth = true
+    auth = false
     env = "development"
+    [api.parsing]
+        enable = true
+
+[web]
+    enable = true
+    auth = false
+    [web.static]
+        folder = "static"
