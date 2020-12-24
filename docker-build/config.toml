@@ -7,3 +7,11 @@
 [api]
     enable = true
     env = "production"
+
+[web]
+    [web.static]
+        folder = "/allure-report-center/static"
+
+[reports]
+    store_folder = "/store"
+    http_folder = "/allure-report-center/static/projects"
