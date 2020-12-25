@@ -96,15 +96,10 @@ export class Reports implements IReports {
     addReport (project: string, report: string, body: string): void {
 
         if (this._projects.includes(project) === false) {
-            return;
+            this._projects.push(project);
         }
 
         const full_store_path = path.resolve(this._full_store_folder, `${project}/allure-results`);
-
-        if (fs.existsSync(full_store_path) === false) {
-            return;
-        }
-
         const full_report_path = path.resolve(full_store_path, report);
         const full_uuid_path = path.resolve(this._full_store_folder, `${project}/uuid`);
         const full_report_dirname = path.dirname(full_report_path);

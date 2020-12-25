@@ -66,7 +66,7 @@ export class RouteProject {
         const name = ctx.params.name;
         const list = await this._projects.getReports(name);
 
-        if (list.includes(name) === undefined) {
+        if (list === undefined) {
             ctx.body = { 
                 status: "fail",
                 message: `Project named "${name}" not found`
@@ -124,7 +124,6 @@ export class RouteProject {
 
         const name = ctx.params.name;
         const report = ctx.params.report;
-        const list = this._projects.getProjects();
         const body = ctx.request.body;
 
         try {
@@ -133,21 +132,12 @@ export class RouteProject {
             throw new Error("Request body is not XML");
         }
 
-        if (list.includes(name) === false) {
-            ctx.body = { 
-                status: "fail",
-                message: `Project named "${name}" not found`
-            };
-        } else {
-            
-            this._projects.addReport(name, report, body);
+        this._projects.addReport(name, report, body);
 
-            ctx.body = { 
-                status: "success",
-                message: `Report "${report}" added to "${name}" project`
-            };
-
-        }
+        ctx.body = { 
+            status: "success",
+            message: `Report "${report}" added to "${name}" project`
+        };
 
         ctx.status = 200;
 
