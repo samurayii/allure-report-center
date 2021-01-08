@@ -1,19 +1,13 @@
 import { spawn } from "child_process";
 import * as pkg from "./package.json";
 
-const docker_cmd = spawn("docker", ["build", "-t", `${pkg.docker_image}:${pkg.version}`, "."], {
-    cwd: __dirname
-});
+const command = `docker build -t ${pkg.docker_image}:${pkg.version} .`;
 
-docker_cmd.stdout.on("data", (data) => {
-  console.log(`${data.toString().trim()}`);
-});
+console.log(`cwd:  ${__dirname}`);
+console.log(`exec:  ${command}`);
 
-docker_cmd.stderr.on("data", (data) => {
-  console.error(`${data.toString().trim()}`);
-  process.exit(1);
-});
-
-docker_cmd.on("error", (error) => {
-    console.log(error);
+spawn(command, [], {
+    cwd: __dirname,
+    shell: true,
+    stdio: ["inherit", "inherit", "inherit"]
 });
