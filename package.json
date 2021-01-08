@@ -1,12 +1,13 @@
 {
     "name": "allure-report-center",
-    "version": "0.1.6",
+    "version": "0.1.8",
     "description": "Central server for allure reports",
     "main": "app.js",
     "directories": {
         "lib": "lib",
         "http": "http",
-        "static": "static"
+        "static": "static",
+        "templates": "templates"
     },
     "bin": {
         "allure-report-center": "./app.js"
@@ -122,6 +123,14 @@
                 {
                     "from": "./src/static",
                     "to": "./dist/static"
+                },
+                {
+                    "from": "./src/templates",
+                    "to": "./dist/templates"
+                },
+                {
+                    "from": "./src/http/templates",
+                    "to": "./dist/http/templates"
                 }
             ]
         },
