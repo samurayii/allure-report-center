@@ -4,9 +4,9 @@ import { Generator } from "./lib/generator";
 import * as chalk from "chalk";
 import * as fs from "fs";
 import * as path from "path";
-import * as rimraf from "rimraf";
 import { CronJob } from "cron";
 import { v4 as uuid } from "uuid";
+import { ITrackers } from "../trackers";
 
 export * from "./interfaces";
 
@@ -16,16 +16,19 @@ export class Reports implements IReports {
     private _projects: string[]
     private readonly _full_store_folder: string
     private readonly _full_reports_folder: string
+    private readonly _full_backup_folder: string
     private _job: CronJob
     private _running_flag: boolean
 
     constructor (
         private readonly _config: IReportsConfig,
+        private readonly _trackers: ITrackers,
         private readonly _logger: ILogger
     ) {
 
         this._full_store_folder = path.resolve(process.cwd(), this._config.store_folder);
         this._full_reports_folder = path.resolve(process.cwd(), this._config.http_folder);
+        this._full_backup_folder = path.resolve(process.cwd(), this._config.backup_folder);
         this._running_flag = false;
 
         if (fs.existsSync(this._full_store_folder) === false) {
@@ -42,7 +45,14 @@ export class Reports implements IReports {
             this._logger.log(`[Reports] Folder ${chalk.grey(this._full_reports_folder)} created`, "dev");
         }
 
-        this._generator = new Generator(this._full_store_folder, this._full_reports_folder, this._logger);
+        if (fs.existsSync(this._full_backup_folder) === false) {
+            fs.mkdirSync(this._full_backup_folder, {
+                recursive: true
+            });
+            this._logger.log(`[Reports] Folder ${chalk.grey(this._full_backup_folder)} created`, "dev");
+        }
+
+        this._generator = new Generator(this._full_store_folder, this._full_reports_folder, this._full_backup_folder, this._logger);
 
         this._projects = fs.readdirSync(this._full_store_folder);
 
@@ -70,7 +80,7 @@ export class Reports implements IReports {
         const full_store_path = path.resolve(this._full_store_folder, `${project}/allure-results`);
 
         if (fs.existsSync(full_store_path) === false) {
-            return;
+            return [];
         }
 
         return await fs.promises.readdir(full_store_path);
@@ -140,7 +150,9 @@ export class Reports implements IReports {
         try {
 
             if (fs.existsSync(full_store_path) === true) {
-                rimraf.sync(full_store_path);
+                fs.rmdirSync(full_store_path, {
+                    recursive: true
+                });
                 this._logger.log(`[Reports] Store folder ${chalk.grey(project)} deleted`, "dev");
             }
 
@@ -152,7 +164,9 @@ export class Reports implements IReports {
         try {
 
             if (fs.existsSync(full_reports_path) === true) {
-                rimraf.sync(full_reports_path);
+                fs.rmdirSync(full_reports_path, {
+                    recursive: true
+                });
                 this._logger.log(`[Reports] Report folder ${chalk.grey(project)} deleted`, "dev");
             }          
 
@@ -243,10 +257,13 @@ export class Reports implements IReports {
 
     }
 
-    _generate (): void {
+    async _generate (): Promise<void> {
 
         for (const project of this._projects) {
-            this._generator.run(project);
+            const report_info = await this._generator.run(project);
+            if (report_info !== undefined) {
+                this._trackers.run(report_info);
+            }
         }
 
     }

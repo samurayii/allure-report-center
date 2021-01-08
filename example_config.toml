@@ -59,6 +59,26 @@
 [reports]                               # настрока генерации отчётов
     store_folder = "store"              # папка размещения хранилища
     http_folder = "static/projects"     # папка размещения http отчётов
+    backup_folder = "backup"            # папка с резервными копиями     
     [reports.cron]                      # настрока cron для генерацая отчётов
         time_zone = "Europe/Moscow"     # временная зона для cron
-        interval = "*/5 * * * * *"      # интервал cron       
+        interval = "*/3 * * * * *"      # интервал cron
+
+[[trackers]]                                            # настройка трекеров
+    type = "jira"                                       # тип трекера (только jira)
+    enable = true                                       # активация
+    url = "http://localhost:8080"                       # адрес сервера
+    user = ""                                           # пользователь или почта
+    password = ""                                       # пароль или токен
+    report_link = "http://localhost:3000/projects"      # ссылка для формирования ссылки на отчёт
+    [trackers.comment]                                  # оставлять коментарии
+        enable = true                                   # активация коментариев 
+        template = "templates/jira_comment_default.hbs" # путь к файлу шаблона
+    [trackers.fields]                                   # добавлять филды
+        enable = false                                  # проставлять поля
+        [trackers.fields.status]                        # поле статуса
+            enable = true                               # активация
+            name = "Testing-status"                     # имя
+        [trackers.fields.report_link]                   # поле ссылки отчёта
+            enable = true                               # активация
+            name = "Allure-report"                      # имя

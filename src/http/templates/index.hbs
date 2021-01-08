@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="css/bootstrap.min.css" >
+        <title>Allure report center</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="col-6 mb-3 mt-3">
+                    <h1 class="text-center"><span class="ml-2">Список отчётов</h1>
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-6 mb-3 mt-3">
+                    <div class="list-group">
+                        {{#each this}}
+                            <a href="projects/{{this}}/index.html" class="list-group-item list-group-item-action">{{this}}</a>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+     </body>
+</html>

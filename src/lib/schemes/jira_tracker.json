@@ -1,0 +1,124 @@
+{
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string",
+            "default": "jira",
+            "enum": ["jira"]
+        },
+        "enable": {
+            "type": "boolean",
+            "default": true,
+            "enum": [true, false]
+        },
+        "url": {
+            "type": "string",
+            "default": "http://localhost:8080",
+            "minLength": 1,
+            "maxLength": 256
+        },
+        "user": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+        },
+        "password": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+        },
+        "report_link": {
+            "type": "string",
+            "default": "http://localhost:3000/projects",
+            "minLength": 1,
+            "maxLength": 256
+        },
+        "comment": {
+            "type": "object",
+            "default": {},
+            "properties": {
+                "enable": {
+                    "type": "boolean",
+                    "default": true,
+                    "enum": [true, false]
+                },
+                "template": {
+                    "type": "string",
+                    "default": "templates/jira_comment_default.hbs",
+                    "minLength": 1,
+                    "maxLength": 256
+                }
+            },
+            "required": [
+                "enable",
+                "template"
+            ]
+        },
+        "fields": {
+            "type": "object",
+            "default": {},
+            "properties": {
+                "enable": {
+                    "type": "boolean",
+                    "default": false,
+                    "enum": [true, false]
+                },
+                "status": {
+                    "type": "object",
+                    "default": {},
+                    "properties": {
+                        "enable": {
+                            "type": "boolean",
+                            "default": true,
+                            "enum": [true, false]
+                        },
+                        "name": {
+                            "type": "string",
+                            "default": "Testing-status",
+                            "minLength": 1,
+                            "maxLength": 64
+                        }
+                    },
+                    "required": [
+                        "enable",
+                        "name"
+                    ]
+                },
+                "report_link": {
+                    "type": "object",
+                    "default": {},
+                    "properties": {
+                        "enable": {
+                            "type": "boolean",
+                            "default": true,
+                            "enum": [true, false]
+                        },
+                        "name": {
+                            "type": "string",
+                            "default": "Allure-report",
+                            "minLength": 1,
+                            "maxLength": 64
+                        }
+                    },
+                    "required": [
+                        "enable",
+                        "name"
+                    ]
+                }
+            },
+            "required": [
+                "enable",
+                "status",
+                "report_link"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "enable",
+        "url",
+        "comment",
+        "fields",
+        "report_link"
+    ]
+}

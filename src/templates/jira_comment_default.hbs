@@ -1,0 +1,37 @@
+{{#if_eq passed true }}
+h2. (/) Testing passed (100%)
+{{else}}
+h2. (x) Testing failed ({{passed_percent}}%)
+{{/if_eq}}
+----
+*Short report:*
+||Result type||Count||
+{{#if statuses.passed }}
+|    passed|    {{statuses.passed}}|
+{{else}}
+|    passed|    0|
+{{/if}}
+{{#if statuses.failed }}
+|{color:#de350b}    *failed (flag)*{color}|{color:#de350b}    *{{statuses.failed}}*{color}|
+{{else}}
+|    failed|    0|
+{{/if}}
+{{#if statuses.skipped }}
+|    skipped|    {{statuses.skipped}}|
+{{else}}
+|    skipped|    0|
+{{/if}}
+{{#if statuses.broken }}
+|{color:#ffab00}  *broken (flag)*{color}|{color:#ffab00}    *{{statuses.broken}}*{color}|
+{{else}}
+|    broken|    0|
+{{/if}}
+{{#if statuses.unknown }}
+|{color:#403294}*unknown (flag)*{color}|{color:#403294}    *{{statuses.unknown}}*{color}|
+{{else}}
+|    unknown|    0|
+{{/if}}
+
+*Total: 20*
+
+*Allure report: [link|{{url}}]*

@@ -1,6 +1,7 @@
 export interface IReportsConfig {
     store_folder: string
     http_folder: string
+    backup_folder: string
     cron: {
         time_zone: string
         interval: string
@@ -21,5 +22,26 @@ export interface IReports {
 }
 
 export interface IGenerator {
-    run: (project: string) => void
+    run: (project: string) => Promise<IReportInfo>
+}
+
+export interface IReportInfo {
+    project: string
+    passed: boolean
+    passed_percent: number
+    total_testes: number
+    url?: string
+    statuses: {
+        [key: string]: number
+    }
+    tests: {
+        [key: string]: {
+            status: string
+            start: number
+            stop: number
+        }
+    }
+    env: {
+        [key: string]: string
+    }
 }

@@ -8,10 +8,12 @@ import { Authorization } from "./lib/authorization";
 
 import "./http";
 import { Reports } from "./lib/reports";
+import { Trackers } from "./lib/trackers";
 
 const logger = new Logger(config.logger);
 const authorization = new Authorization(config.authorization);
-const reports = new Reports(config.reports, logger);
+const trackers = new Trackers(config.trackers, logger);
+const reports = new Reports(config.reports, trackers, logger);
 
 Singleton("config", config);
 Singleton(Logger.name, logger);

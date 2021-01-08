@@ -1,0 +1,37 @@
+{{#if_eq passed true }}
+h2. (/) Тестирование прошло удачно (100%)
+{{else}}
+h2. (x) Тестирование провалено ({{passed_percent}}%)
+{{/if_eq}}
+----
+*Общий отчёт:*
+||Тип результата||Количество||
+{{#if statuses.passed }}
+|      удачный|        {{statuses.passed}}|
+{{else}}
+|        удачный|        0|
+{{/if}}
+{{#if statuses.failed }}
+|{color:#de350b}*проваленный (flag)*{color}|{color:#de350b}        *{{statuses.failed}}*{color}|
+{{else}}
+| проваленный|        0|
+{{/if}}
+{{#if statuses.skipped }}
+|   пропущенный |        {{statuses.skipped}}|
+{{else}}
+| пропущенный|        0|
+{{/if}}
+{{#if statuses.broken }}
+|  *{color:#ff8b00}сломанный (flag){color}* |        *{color:#ff8b00}{{statuses.broken}}{color}*|
+{{else}}
+|   сломанный|        0|
+{{/if}}
+{{#if statuses.unknown }}
+|*{color:#403294}не известный (flag){color}* |        *{color:#403294}{{statuses.unknown}}{color}*|
+{{else}}
+|  не известный|        0|
+{{/if}}
+
+*Всего: 20*
+
+*Allure отчёт: [просмотр|{{url}}]*

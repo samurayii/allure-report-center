@@ -3,7 +3,6 @@ import { Context, Controller, Delete, Get, Post } from "koa-ts-decorators";
 import { ILogger, Logger } from "logger-flx";
 import { IReports, Reports } from "../../lib/reports";
 import * as chalk from "chalk";
-import * as xml2js from "xml2js";
 
 @Controller("/v1/project", "api-server")
 export class RouteProject {
@@ -125,12 +124,6 @@ export class RouteProject {
         const name = ctx.params.name;
         const report = ctx.params.report;
         const body = ctx.request.body;
-
-        try {
-            await xml2js.parseStringPromise(body);
-        } catch (error) {
-            throw new Error("Request body is not XML");
-        }
 
         this._projects.addReport(name, report, body);
 
