@@ -84,7 +84,7 @@
                         "name"
                     ]
                 },
-                "report_link": {
+                "last_report": {
                     "type": "object",
                     "default": {},
                     "properties": {
@@ -109,7 +109,7 @@
             "required": [
                 "enable",
                 "status",
-                "report_link"
+                "last_report"
             ]
         }
     },

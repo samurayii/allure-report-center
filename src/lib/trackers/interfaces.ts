@@ -17,7 +17,7 @@ export interface ITrackerConfig {
             enable: boolean
             name: string
         }
-        report_link: {
+        last_report: {
             enable: boolean
             name: string
         }

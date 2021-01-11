@@ -266,9 +266,9 @@ export class JiraTracker implements ITracker {
                 this._logger.log(`[Trackers] Status field named ${chalk.grey(this._config.fields.status.name)} to JIRA ${chalk.grey(this._url)} exist`, "dev");
             }
 
-            if (item.name === this._config.fields.report_link.name) {
+            if (item.name === this._config.fields.last_report.name) {
                 id_report_field = item.id;
-                this._logger.log(`[Trackers] Report field named ${chalk.grey(this._config.fields.report_link.name)} to JIRA ${chalk.grey(this._url)} exist`, "dev");
+                this._logger.log(`[Trackers] Report field named ${chalk.grey(this._config.fields.last_report.name)} to JIRA ${chalk.grey(this._url)} exist`, "dev");
             }
 
         }
@@ -308,11 +308,11 @@ export class JiraTracker implements ITracker {
 
         }
         
-        if (id_report_field === undefined && this._config.fields.report_link.enable === true) {
+        if (id_report_field === undefined && this._config.fields.last_report.enable === true) {
 
             const field_url = `${this._url}/field`;
 
-            this._logger.log(`[Trackers] Add report field named ${chalk.grey(this._config.fields.report_link.name)} to JIRA ${chalk.grey(this._url)}`, "dev");
+            this._logger.log(`[Trackers] Add report field named ${chalk.grey(this._config.fields.last_report.name)} to JIRA ${chalk.grey(this._url)}`, "dev");
             this._logger.log(`[Trackers] POST ${chalk.grey(field_url)}`, "dev");
 
             const response = await fetch(field_url, {
@@ -323,7 +323,7 @@ export class JiraTracker implements ITracker {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    name: this._config.fields.report_link.name,
+                    name: this._config.fields.last_report.name,
                     description: "Link to allure report",
                     type: "com.atlassian.jira.plugin.system.customfieldtypes:url",
                     searcherKey: "com.atlassian.jira.plugin.system.customfieldtypes:exacttextsearcher"
@@ -339,11 +339,11 @@ export class JiraTracker implements ITracker {
             
             id_report_field = json_body.id;
 
-            this._logger.log(`[Trackers] Report field named ${chalk.grey(this._config.fields.report_link.name)} to JIRA ${chalk.grey(this._url)} added`, "dev");
+            this._logger.log(`[Trackers] Report field named ${chalk.grey(this._config.fields.last_report.name)} to JIRA ${chalk.grey(this._url)} added`, "dev");
 
         }
 
-        if (this._config.fields.report_link.enable === false && this._config.fields.status.enable === false) {
+        if (this._config.fields.last_report.enable === false && this._config.fields.status.enable === false) {
             return;
         }
 
@@ -357,7 +357,7 @@ export class JiraTracker implements ITracker {
                 fields: {}
             };
 
-            if (this._config.fields.report_link.enable === true) {
+            if (this._config.fields.last_report.enable === true) {
                 body.fields[id_report_field] = report_info.url;
             }
 
