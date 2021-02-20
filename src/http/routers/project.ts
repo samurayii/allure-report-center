@@ -125,7 +125,7 @@ export class RouteProject {
         const report = ctx.params.report;
         const body = ctx.request.body;
 
-        this._projects.addReport(name, report, body);
+        this._projects.addReport(name, report, Buffer.from(body, "base64"));
 
         ctx.body = { 
             status: "success",

@@ -103,7 +103,7 @@ export class Reports implements IReports {
         this._job.start();
     }
 
-    addReport (project: string, report: string, body: string): void {
+    addReport (project: string, report: string, body: Buffer): void {
 
         if (this._projects.includes(project) === false) {
             this._projects.push(project);

@@ -11,7 +11,7 @@ export interface IReportsConfig {
 export interface IReports {
     close: () => void
     run: () => void
-    addReport: (project: string, report: string, body: string) => void
+    addReport: (project: string, report: string, body: Buffer) => void
     existProject: (project: string) => boolean
     deleteProject: (project: string) => void
     existReport: (project: string, report: string) => boolean
